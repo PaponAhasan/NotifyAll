@@ -28,7 +28,7 @@ fun Navigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Route.SplashScreen.route,
+        startDestination = NavRoute.SplashScreen.route,
         //Animation added
         enterTransition = {
             fadeIn(animationSpec = tween(time)) + slideIntoContainer(
@@ -56,33 +56,33 @@ fun Navigation() {
         },
     ) {
         /* ----------------- */
-        composable(route = Route.SplashScreen.route) {
+        composable(route = NavRoute.SplashScreen.route) {
             SplashScreen(navController = navController)
         }
         /* ----------------- */
         navigation(
-            startDestination = Route.WelcomeScreen.route,
-            route = Route.AuthNav.route
+            startDestination = NavRoute.WelcomeScreen.route,
+            route = NavRoute.AuthNav.route
         ) {
-            composable(route = Route.WelcomeScreen.route) {
+            composable(route = NavRoute.WelcomeScreen.route) {
                 val viewModel = it.sharedViewModel<UserViewModel>(navController = navController)
                 WelcomeScreen(navController = navController)
             }
-            composable(route = Route.LoginScreen.route) {
+            composable(route = NavRoute.LoginScreen.route) {
                 val viewModel = it.sharedViewModel<UserViewModel>(navController = navController)
                 LoginScreen(navController = navController)
             }
-            composable(route = Route.RegisterScreen.route) {
+            composable(route = NavRoute.RegisterScreen.route) {
                 val viewModel = it.sharedViewModel<UserViewModel>(navController = navController)
                 RegisterScreen(navController = navController)
             }
         }
         /* ----------------- */
         navigation(
-            startDestination = Route.HomeScreen.route,
-            route = Route.HomeNav.route
+            startDestination = NavRoute.HomeScreen.route,
+            route = NavRoute.HomeNav.route
         ) {
-            composable(route = Route.HomeScreen.route) {
+            composable(route = NavRoute.HomeScreen.route) {
                 HomeScreen(navController = navController)
             }
         }

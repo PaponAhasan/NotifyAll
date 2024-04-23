@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.notifyall.R
-import com.example.notifyall.navigation.Route
+import com.example.notifyall.navigation.NavRoute
 import com.example.notifyall.ui.theme.Sky40
 import kotlinx.coroutines.delay
 
@@ -62,10 +62,10 @@ fun SplashScreen(navController: NavController) {
         // Check if the user is logged in
         val isUserLoggedIn = false
         if (isUserLoggedIn) {
-            navController.navigate(Route.HomeNav.route)
+            navController.navigate(NavRoute.HomeNav.route)
         } else {
             // Navigate to the login screen if the user is not logged in
-            navController.navigate(Route.AuthNav.route)
+            navController.navigate(NavRoute.AuthNav.route)
         }
     }
     Column(

@@ -87,4 +87,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     //Firebase
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 }

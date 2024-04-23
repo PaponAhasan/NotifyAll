@@ -10,6 +10,9 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Password
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -25,12 +28,25 @@ import com.example.koijabencarowner.screens.healper.ButtonComponentField
 import com.example.koijabencarowner.screens.healper.OutlinedPasswordField
 import com.example.koijabencarowner.screens.healper.OutlinedTextField
 import com.example.notifyall.R
-import com.example.notifyall.navigation.Route
+import com.example.notifyall.navigation.NavRoute
 import com.example.notifyall.ui.theme.customTypography
 import com.example.notifyall.ui.theme.gray40
 
 @Composable
 fun RegisterScreen(navController: NavController) {
+
+    val email by remember {
+        mutableStateOf("")
+    }
+
+    val password by remember {
+        mutableStateOf("")
+    }
+
+    val name by remember {
+        mutableStateOf("")
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -84,7 +100,7 @@ fun RegisterScreen(navController: NavController) {
 
         ButtonComponentField(value = stringResource(id = R.string.register)){
             navController.popBackStack()
-            navController.navigate(Route.LoginScreen.route)
+            navController.navigate(NavRoute.LoginScreen.route)
         }
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_16)))
@@ -99,7 +115,7 @@ fun RegisterScreen(navController: NavController) {
             ),
         ){
             navController.popBackStack()
-            navController.navigate(Route.LoginScreen.route)
+            navController.navigate(NavRoute.LoginScreen.route)
         }
     }
 }
