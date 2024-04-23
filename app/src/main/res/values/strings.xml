@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">NotifyAll</string>
+
+    <string name="welcome1">Welcome to the NotifyAll app</string>
+    <string name="welcome2">Notify with NotifyAll</string>
+    <string name="new_account">Open new account</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+
+    <string name="login1">Log in</string>
+    <string name="login2">Log in with your email number and password.</string>
+    <string name="login3">Enter your email number</string>
+    <string name="login4">Enter your password</string>
+    <string name="login5">Have no account?</string>
+    <string name="login6">Open new account</string>
+    <string name="login7">App version: 1.0.0</string>
+    <string name="password_hide">\"Hide password\"</string>
+    <string name="password_show">\"Show password\"</string>
+
+    <string name="register1">Register in</string>
+    <string name="register2">Register in with your email number and password.</string>
+    <string name="register3">Enter your email number</string>
+    <string name="register4">Enter your password</string>
+    <string name="register5">Enter your name</string>
+    <string name="register6">Enter your confirm password</string>
+    <string name="register7">Already have an account?</string>
+
+</resources>
