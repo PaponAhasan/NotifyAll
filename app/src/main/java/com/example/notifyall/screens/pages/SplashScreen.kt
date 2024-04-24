@@ -29,17 +29,23 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.notifyall.R
 import com.example.notifyall.navigation.NavRoute
+import com.example.notifyall.screens.viemodels.UserViewModel
 import com.example.notifyall.ui.theme.Sky40
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(
+    navController: NavController,
+    userViewModel: UserViewModel
+) {
     val scale = remember {
         Animatable(0f)
     }
     val alpha = remember {
         Animatable(0f)
     }
+    val isUserLoggedIn = userViewModel.navigateToLogin.value
+
     LaunchedEffect(key1 = true) {
         //Logo Animation
         scale.animateTo(
@@ -60,8 +66,7 @@ fun SplashScreen(navController: NavController) {
         navController.popBackStack()
 
         // Check if the user is logged in
-        val isUserLoggedIn = false
-        if (isUserLoggedIn) {
+        if (isUserLoggedIn == true) {
             navController.navigate(NavRoute.HomeNav.route)
         } else {
             // Navigate to the login screen if the user is not logged in

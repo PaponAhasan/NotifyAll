@@ -9,7 +9,7 @@
 
     <string name="login1">Log in</string>
     <string name="login2">Log in with your email number and password.</string>
-    <string name="login3">Enter your email number</string>
+    <string name="login3">Enter your email address</string>
     <string name="login4">Enter your password</string>
     <string name="login5">Have no account?</string>
     <string name="login6">Open new account</string>
@@ -19,7 +19,7 @@
 
     <string name="register1">Register in</string>
     <string name="register2">Register in with your email number and password.</string>
-    <string name="register3">Enter your email number</string>
+    <string name="register3">Enter your email address</string>
     <string name="register4">Enter your password</string>
     <string name="register5">Enter your name</string>
     <string name="register6">Enter your confirm password</string>

@@ -34,9 +34,10 @@ import com.example.koijabencarowner.screens.healper.ButtonComponentField
 import com.example.koijabencarowner.screens.healper.OutlinedEmailField
 import com.example.koijabencarowner.screens.healper.OutlinedPasswordField
 import com.example.koijabencarowner.screens.healper.OutlinedTextField
+import com.example.koijabencarowner.screens.healper.ProgressLoader
 import com.example.notifyall.R
+import com.example.notifyall.models.User
 import com.example.notifyall.navigation.NavRoute
-import com.example.notifyall.screens.viemodels.LoginViewModel
 import com.example.notifyall.screens.viemodels.RegisterViewModel
 import com.example.notifyall.ui.theme.customTypography
 import com.example.notifyall.ui.theme.gray40
@@ -52,15 +53,11 @@ fun RegisterScreen(
         mutableStateOf("")
     }
 
-    var password by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var confirmPassword by rememberSaveable {
-        mutableStateOf("")
-    }
-
     var name by rememberSaveable {
+        mutableStateOf("")
+    }
+
+    var password by rememberSaveable {
         mutableStateOf("")
     }
 
@@ -68,8 +65,8 @@ fun RegisterScreen(
 
     val context = LocalContext.current
     val state = registerViewModel.registerState.collectAsState(initial = null)
+    val userState = registerViewModel.userSaveState.collectAsState(initial = null)
 
-    //val state = vi
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -96,7 +93,15 @@ fun RegisterScreen(
         OutlinedEmailField(
             labelValue = stringResource(id = R.string.register3),
             painterResource = Icons.Filled.Email,
-            onValueChange = { email = it }
+            onValueChange = { value ->
+                email = value
+                registerViewModel.let {
+                    it.registerFieldState.value = it.registerFieldState.value.copy(
+                        email = value
+                    )
+                }
+            },
+            errorStatus = registerViewModel.registerFieldState.value.emailError
         )
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_8)))
@@ -104,7 +109,15 @@ fun RegisterScreen(
         OutlinedTextField(
             labelValue = stringResource(id = R.string.register5),
             painterResource = Icons.Filled.PersonAdd,
-            onValueChange = { name = it }
+            onValueChange = { value ->
+                name = value
+                registerViewModel.let {
+                    it.registerFieldState.value = it.registerFieldState.value.copy(
+                        name = value
+                    )
+                }
+            },
+            errorStatus = registerViewModel.registerFieldState.value.nameError
         )
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_8)))
@@ -112,7 +125,15 @@ fun RegisterScreen(
         OutlinedPasswordField(
             labelValue = stringResource(id = R.string.register4),
             painterResource = Icons.Filled.Password,
-            onValueChange = { password = it }
+            onValueChange = { value ->
+                password = value
+                registerViewModel.let {
+                    it.registerFieldState.value = it.registerFieldState.value.copy(
+                        password = value
+                    )
+                }
+            },
+            errorStatus = registerViewModel.registerFieldState.value.passwordError
         )
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_8)))
@@ -120,14 +141,29 @@ fun RegisterScreen(
         OutlinedPasswordField(
             labelValue = stringResource(id = R.string.register6),
             painterResource = Icons.Filled.Password,
-            onValueChange = { confirmPassword = it }
+            onValueChange = { value ->
+                registerViewModel.let {
+                    it.registerFieldState.value = it.registerFieldState.value.copy(
+                        confirmPassword = value
+                    )
+                }
+            },
+            errorStatus = registerViewModel.registerFieldState.value.confirmPasswordError
         )
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_32)))
 
         ButtonComponentField(value = stringResource(id = R.string.register)) {
-            navController.popBackStack()
-            navController.navigate(NavRoute.LoginScreen.route)
+            if (!registerViewModel.validateInputField().first) {
+                Toast.makeText(
+                    context,
+                    registerViewModel.validateInputField().second, Toast.LENGTH_LONG
+                ).show()
+                return@ButtonComponentField
+            }
+            scope.launch {
+                registerViewModel.register(email, password)
+            }
         }
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_16)))
@@ -149,10 +185,21 @@ fun RegisterScreen(
             scope.launch {
                 if (state.value?.isSuccess?.isNotEmpty() == true) {
                     val success = state.value?.isSuccess
+
+                    val user = User(
+                        email = email,
+                        name = name,
+                        isAdmin = false
+                    )
+                    registerViewModel.storeUserData(user)
+
+                    navController.popBackStack()
+                    navController.navigate(NavRoute.LoginScreen.route)
                     Toast.makeText(context, "$success", Toast.LENGTH_LONG).show()
                 }
             }
         }
+
         LaunchedEffect(key1 = state.value?.isError) {
             scope.launch {
                 if (state.value?.isError?.isNotBlank() == true) {
@@ -162,5 +209,15 @@ fun RegisterScreen(
             }
         }
 
+        LaunchedEffect(key1 = userState.value?.isError) {
+            scope.launch {
+                if (userState.value?.isError?.isNotBlank() == true) {
+                    val error = userState.value?.isError
+                    Toast.makeText(context, "$error", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
+        if (state.value?.isLoading == true) ProgressLoader()
     }
 }

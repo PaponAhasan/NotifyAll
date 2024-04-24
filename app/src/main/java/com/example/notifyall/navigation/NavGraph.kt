@@ -15,12 +15,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.koijabencarowner.screens.pages.SplashScreen
-import com.example.koijabencarowner.screens.pages.auth.LoginScreen
+import com.example.notifyall.screens.pages.login_screen.LoginScreen
 import com.example.koijabencarowner.screens.pages.auth.WelcomeScreen
-import com.example.koijabencarowner.screens.pages.home.HomeScreen
+import com.example.notifyall.screens.pages.home_screen.HomeScreen
 import com.example.notifyall.screens.pages.register_screen.RegisterScreen
 import com.example.notifyall.screens.viemodels.LoginViewModel
 import com.example.notifyall.screens.viemodels.RegisterViewModel
+import com.example.notifyall.screens.viemodels.UserViewModel
 
 @Composable
 fun Navigation() {
@@ -58,7 +59,8 @@ fun Navigation() {
     ) {
         /* ----------------- */
         composable(route = NavRoute.SplashScreen.route) {
-            SplashScreen(navController = navController)
+            val viewModel = it.sharedViewModel<UserViewModel>(navController = navController)
+            SplashScreen(navController = navController, userViewModel = viewModel)
         }
         /* ----------------- */
         navigation(
@@ -83,7 +85,8 @@ fun Navigation() {
             route = NavRoute.HomeNav.route
         ) {
             composable(route = NavRoute.HomeScreen.route) {
-                HomeScreen(navController = navController)
+                val viewModel = it.sharedViewModel<UserViewModel>(navController = navController)
+                HomeScreen(navController = navController, userViewModel = viewModel)
             }
         }
 

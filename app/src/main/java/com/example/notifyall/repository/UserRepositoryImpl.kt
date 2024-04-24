@@ -40,17 +40,21 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getCurrentUser() {
-        TODO("Not yet implemented")
+    override fun storeUserData(user: User): Flow<Resource<Void>> {
+        return flow<Resource<Void>> {
+            emit(Resource.Loading())
+            val result = firebaseFirestore.collection("users").document(firebaseAuth.currentUser?.uid ?: "")
+                .set(user).await()
+            emit(Resource.Success(result))
+        }.catch {
+            emit(Resource.Error(it.message.toString()))
+        }
     }
 
-    override fun signInWithGoogle(idToken: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun storeUserData(user: User) {
-        firebaseFirestore.collection("users").document(firebaseAuth.currentUser?.uid ?: "")
-            .set(user)
+    override fun getCurrentUser(): Flow<Boolean> {
+        return flow {
+            firebaseAuth.currentUser != null
+        }
     }
 
     override fun logout() {

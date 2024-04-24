@@ -2,7 +2,10 @@ package com.example.koijabencarowner.screens.healper
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,6 +15,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
@@ -104,9 +109,9 @@ fun AutoResizedText(
 fun OutlinedTextField(
     modifier: Modifier = Modifier,
     labelValue: String? = null,
-    textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
     maxLines: Int = Int.MAX_VALUE,
     painterResource: ImageVector? = null,
+    errorStatus: Boolean = false,
     onValueChange: (String) -> Unit,
 ) {
     var textValue by remember {
@@ -134,7 +139,8 @@ fun OutlinedTextField(
             if (painterResource != null) {
                 Icon(imageVector = painterResource, contentDescription = "")
             }
-        }
+        },
+        isError = !errorStatus
     )
 }
 
@@ -142,10 +148,10 @@ fun OutlinedTextField(
 fun OutlinedEmailField(
     modifier: Modifier = Modifier,
     labelValue: String? = null,
-    textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
     maxLines: Int = Int.MAX_VALUE,
     painterResource: ImageVector? = null,
     onValueChange: (String) -> Unit,
+    errorStatus: Boolean = false,
 ) {
     var textValue by remember {
         mutableStateOf("")
@@ -172,7 +178,8 @@ fun OutlinedEmailField(
             if (painterResource != null) {
                 Icon(imageVector = painterResource, contentDescription = "")
             }
-        }
+        },
+        isError = !errorStatus
     )
 }
 
@@ -183,6 +190,7 @@ fun OutlinedPasswordField(
     maxLines: Int = Int.MAX_VALUE,
     painterResource: ImageVector? = null,
     onValueChange: (String) -> Unit,
+    errorStatus: Boolean = false,
 ) {
     var password by remember {
         mutableStateOf("")
@@ -230,6 +238,7 @@ fun OutlinedPasswordField(
             }
         },
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        isError = !errorStatus
     )
 }
 
@@ -278,6 +287,18 @@ fun OutlinedButtonComponentField(
         onClick = onclick,
     ) {
         Text(text = value, fontSize = 14.sp, fontWeight = Bold)
+    }
+}
+
+@Composable
+fun ProgressLoader() {
+    Row(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        CircularProgressIndicator()
     }
 }
 
