@@ -74,11 +74,13 @@ fun AutoResizedText(
     Text(
         text = text,
         color = color,
-        modifier = modifier.drawWithContent {
-            if (shouldDraw) {
-                drawContent()
+        modifier = modifier
+            .drawWithContent {
+                if (shouldDraw) {
+                    drawContent()
+                }
             }
-        }.clickable { onclick() },
+            .clickable { onclick() },
         softWrap = false,
         style = resizedTextStyle,
         onTextLayout = { result ->
@@ -105,6 +107,7 @@ fun OutlinedTextField(
     textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
     maxLines: Int = Int.MAX_VALUE,
     painterResource: ImageVector? = null,
+    onValueChange: (String) -> Unit,
 ) {
     var textValue by remember {
         mutableStateOf("")
@@ -116,7 +119,48 @@ fun OutlinedTextField(
             .clip(componentShapes.small),
         value = textValue,
         label = { Text(text = labelValue ?: "") },
-        onValueChange = { textValue = it },
+        onValueChange = {
+            textValue = it
+            onValueChange(it)
+        },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedLabelColor = MaterialTheme.colorScheme.primary,
+            cursorColor = MaterialTheme.colorScheme.primary
+        ),
+        keyboardOptions = KeyboardOptions.Default,
+        maxLines = maxLines,
+        leadingIcon = {
+            if (painterResource != null) {
+                Icon(imageVector = painterResource, contentDescription = "")
+            }
+        }
+    )
+}
+
+@Composable
+fun OutlinedEmailField(
+    modifier: Modifier = Modifier,
+    labelValue: String? = null,
+    textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
+    maxLines: Int = Int.MAX_VALUE,
+    painterResource: ImageVector? = null,
+    onValueChange: (String) -> Unit,
+) {
+    var textValue by remember {
+        mutableStateOf("")
+    }
+
+    OutlinedTextField(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(componentShapes.small),
+        value = textValue,
+        label = { Text(text = labelValue ?: "") },
+        onValueChange = {
+            textValue = it
+            onValueChange(it)
+        },
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = MaterialTheme.colorScheme.primary,
             focusedLabelColor = MaterialTheme.colorScheme.primary,
@@ -138,6 +182,7 @@ fun OutlinedPasswordField(
     labelValue: String? = null,
     maxLines: Int = Int.MAX_VALUE,
     painterResource: ImageVector? = null,
+    onValueChange: (String) -> Unit,
 ) {
     var password by remember {
         mutableStateOf("")
@@ -153,7 +198,10 @@ fun OutlinedPasswordField(
             .clip(componentShapes.small),
         value = password,
         label = { Text(text = labelValue ?: "") },
-        onValueChange = { password = it },
+        onValueChange = {
+            password = it
+            onValueChange(it)
+        },
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = MaterialTheme.colorScheme.primary,
             focusedLabelColor = MaterialTheme.colorScheme.primary,

@@ -18,8 +18,9 @@ import com.example.koijabencarowner.screens.pages.SplashScreen
 import com.example.koijabencarowner.screens.pages.auth.LoginScreen
 import com.example.koijabencarowner.screens.pages.auth.WelcomeScreen
 import com.example.koijabencarowner.screens.pages.home.HomeScreen
-import com.example.notifyall.screens.pages.auth.RegisterScreen
-import com.example.notifyall.screens.viemodels.UserViewModel
+import com.example.notifyall.screens.pages.register_screen.RegisterScreen
+import com.example.notifyall.screens.viemodels.LoginViewModel
+import com.example.notifyall.screens.viemodels.RegisterViewModel
 
 @Composable
 fun Navigation() {
@@ -65,16 +66,15 @@ fun Navigation() {
             route = NavRoute.AuthNav.route
         ) {
             composable(route = NavRoute.WelcomeScreen.route) {
-                val viewModel = it.sharedViewModel<UserViewModel>(navController = navController)
                 WelcomeScreen(navController = navController)
             }
             composable(route = NavRoute.LoginScreen.route) {
-                val viewModel = it.sharedViewModel<UserViewModel>(navController = navController)
-                LoginScreen(navController = navController)
+                val viewModel = it.sharedViewModel<LoginViewModel>(navController = navController)
+                LoginScreen(navController = navController, loginViewModel = viewModel)
             }
             composable(route = NavRoute.RegisterScreen.route) {
-                val viewModel = it.sharedViewModel<UserViewModel>(navController = navController)
-                RegisterScreen(navController = navController)
+                val viewModel = it.sharedViewModel<RegisterViewModel>(navController = navController)
+                RegisterScreen(navController = navController, registerViewModel = viewModel)
             }
         }
         /* ----------------- */

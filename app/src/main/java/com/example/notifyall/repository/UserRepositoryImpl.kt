@@ -18,7 +18,8 @@ class UserRepositoryImpl @Inject constructor(
     override fun login(email: String, password: String): Flow<Resource<AuthResult>> {
         return flow<Resource<AuthResult>> {
             emit(Resource.Loading())
-            val result: AuthResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            val result: AuthResult =
+                firebaseAuth.signInWithEmailAndPassword(email, password).await()
             emit(Resource.Success(result))
         }.catch {
             emit(Resource.Error(it.message.toString()))
@@ -26,13 +27,13 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override fun register(
-        name: String,
         email: String,
         password: String
     ): Flow<Resource<AuthResult>> {
         return flow<Resource<AuthResult>> {
             emit(Resource.Loading())
-            val result: AuthResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            val result: AuthResult =
+                firebaseAuth.createUserWithEmailAndPassword(email, password).await()
             emit(Resource.Success(result))
         }.catch {
             emit(Resource.Error(it.message.toString()))
@@ -48,7 +49,8 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override fun storeUserData(user: User) {
-        firebaseFirestore.collection("users").document(firebaseAuth.currentUser?.uid ?: "").set(user)
+        firebaseFirestore.collection("users").document(firebaseAuth.currentUser?.uid ?: "")
+            .set(user)
     }
 
     override fun logout() {

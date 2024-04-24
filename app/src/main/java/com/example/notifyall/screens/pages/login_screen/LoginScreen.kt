@@ -1,4 +1,4 @@
-package com.example.notifyall.screens.pages.auth
+package com.example.koijabencarowner.screens.pages.auth
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,11 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Password
-import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -29,23 +28,24 @@ import com.example.koijabencarowner.screens.healper.OutlinedPasswordField
 import com.example.koijabencarowner.screens.healper.OutlinedTextField
 import com.example.notifyall.R
 import com.example.notifyall.navigation.NavRoute
+import com.example.notifyall.screens.viemodels.LoginViewModel
 import com.example.notifyall.ui.theme.customTypography
 import com.example.notifyall.ui.theme.gray40
 
 @Composable
-fun RegisterScreen(navController: NavController) {
+fun LoginScreen(
+    navController: NavController,
+    loginViewModel: LoginViewModel
+) {
 
-    val email by remember {
+    val email by rememberSaveable {
         mutableStateOf("")
     }
 
-    val password by remember {
+    val password by rememberSaveable {
         mutableStateOf("")
     }
 
-    val name by remember {
-        mutableStateOf("")
-    }
 
     Column(
         modifier = Modifier
@@ -56,58 +56,51 @@ fun RegisterScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_128)))
 
         AutoResizedText(
-            text = stringResource(id = R.string.register1),
+            text = stringResource(id = R.string.login1),
             style = customTypography.titleMedium,
-        ){}
+        ){
+
+        }
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_8)))
 
         AutoResizedText(
-            text = stringResource(id = R.string.register2),
+            text = stringResource(id = R.string.login2),
             style = customTypography.labelSmall,
             color = gray40
-        ){}
+        ){
+
+        }
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_32)))
 
         OutlinedTextField(
-            labelValue = stringResource(id = R.string.register3),
+            labelValue = stringResource(id = R.string.login3),
             painterResource = Icons.Filled.Email,
         )
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_8)))
 
-        OutlinedTextField(
-            labelValue = stringResource(id = R.string.register5),
-            painterResource = Icons.Filled.PersonAdd,
-        )
-
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_8)))
-
         OutlinedPasswordField(
-            labelValue = stringResource(id = R.string.register4),
-            painterResource =  Icons.Filled.Password,
-        )
-
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_8)))
-
-        OutlinedPasswordField(
-            labelValue = stringResource(id = R.string.register6),
+            labelValue = stringResource(id = R.string.login4),
             painterResource =  Icons.Filled.Password,
         )
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_32)))
 
-        ButtonComponentField(value = stringResource(id = R.string.register)){
-            navController.popBackStack()
-            navController.navigate(NavRoute.LoginScreen.route)
+        ButtonComponentField(value = stringResource(id = R.string.login)){
+            navController.navigate(NavRoute.HomeNav.route){
+                popUpTo(NavRoute.AuthNav.route){
+                    inclusive = true
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_16)))
 
         AutoResizedText(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = stringResource(id = R.string.register7),
+            text = stringResource(id = R.string.login5),
             style = TextStyle(
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
@@ -115,7 +108,7 @@ fun RegisterScreen(navController: NavController) {
             ),
         ){
             navController.popBackStack()
-            navController.navigate(NavRoute.LoginScreen.route)
+            navController.navigate(NavRoute.RegisterScreen.route)
         }
     }
 }

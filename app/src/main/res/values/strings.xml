@@ -23,6 +23,6 @@
     <string name="register4">Enter your password</string>
     <string name="register5">Enter your name</string>
     <string name="register6">Enter your confirm password</string>
-    <string name="register7">Already have an account?</string>
+    <string name="register7">Already have an account? Sign in</string>
 
 </resources>
