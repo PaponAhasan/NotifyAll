@@ -88,7 +88,7 @@ fun SplashScreen(
             }
             append(" ")
             withStyle(style = SpanStyle(color = Sky40)) {
-                append("go") // "go" will be red
+                append("Go") // "go" will be red
             }
         }
 

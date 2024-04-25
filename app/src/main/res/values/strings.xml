@@ -25,4 +25,7 @@
     <string name="register6">Enter your confirm password</string>
     <string name="register7">Already have an account? Sign in</string>
 
+    <string name="notification1">Enter your notification</string>
+    <string name="notification2">Send Notification</string>
+
 </resources>

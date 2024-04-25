@@ -191,7 +191,7 @@ fun RegisterScreen(
                         name = name,
                         isAdmin = false
                     )
-                    registerViewModel.storeUserData(user)
+                    registerViewModel.setUserData(user)
 
                     navController.popBackStack()
                     navController.navigate(NavRoute.LoginScreen.route)

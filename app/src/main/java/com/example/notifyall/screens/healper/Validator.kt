@@ -31,6 +31,13 @@ object Validator {
             "Password must be at least 6 characters and match with confirm password"
         )
     }
+
+    fun validateNotificationTitle(title: String): ValidateResult {
+        return ValidateResult(
+            title.isNotEmpty(),
+            "Notification must not be empty"
+        )
+    }
 }
 
 data class ValidateResult(

@@ -20,6 +20,7 @@ import com.example.koijabencarowner.screens.pages.auth.WelcomeScreen
 import com.example.notifyall.screens.pages.home_screen.HomeScreen
 import com.example.notifyall.screens.pages.register_screen.RegisterScreen
 import com.example.notifyall.screens.viemodels.LoginViewModel
+import com.example.notifyall.screens.viemodels.NotificationViewModel
 import com.example.notifyall.screens.viemodels.RegisterViewModel
 import com.example.notifyall.screens.viemodels.UserViewModel
 
@@ -85,8 +86,9 @@ fun Navigation() {
             route = NavRoute.HomeNav.route
         ) {
             composable(route = NavRoute.HomeScreen.route) {
-                val viewModel = it.sharedViewModel<UserViewModel>(navController = navController)
-                HomeScreen(navController = navController, userViewModel = viewModel)
+                val userViewModel = it.sharedViewModel<UserViewModel>(navController = navController)
+                val notificationViewModel = it.sharedViewModel<NotificationViewModel>(navController = navController)
+                HomeScreen(navController = navController, userViewModel = userViewModel, notificationViewModel = notificationViewModel)
             }
         }
 

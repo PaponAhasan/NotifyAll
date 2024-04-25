@@ -46,8 +46,8 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun storeUserData(user: User) = viewModelScope.launch {
-        repository.storeUserData(user).collect { result ->
+    fun setUserData(user: User) = viewModelScope.launch {
+        repository.setUserData(user).collect { result ->
             when (result) {
                 is Resource.Success -> {
                     _userSaveState.send(RegisterState(isSuccess = "Save user in success"))
@@ -85,7 +85,7 @@ class RegisterViewModel @Inject constructor(
             passwordError = userPassword.status,
             confirmPasswordError = userConfirmPassword.status
         )
-        // set error message
+        // get error message
         if (!userEmail.status) {
             return Pair(false, userEmail.message)
         } else if (!userName.status) {
