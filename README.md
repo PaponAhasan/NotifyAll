@@ -35,7 +35,7 @@ The goal of this assignment is for The admin will input the notification message
 - Coroutinesr
 - Jetpack Compose: Version 1.9.0
 
-Getting Started  
+## Getting Started  
 To get started, you will need to install the following dependencies:  
 
 Once you have installed the dependencies, you can run the application by following these steps:  
