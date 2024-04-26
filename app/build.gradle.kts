@@ -1,9 +1,11 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
     alias(libs.plugins.daggerDaggerHilt)
-    id("com.google.gms.google-services")
+    alias(libs.plugins.googleServices)
 }
 
 android {
@@ -21,6 +23,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val properties = Properties()
+        properties.load(project.rootProject.file("apikeys.properties").inputStream())
+        buildConfigField("String", "SERVER_KEY", properties["SERVER_KEY"].toString())
     }
 
     buildTypes {
@@ -41,6 +47,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.10"
@@ -88,6 +95,11 @@ dependencies {
     //Firebase
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.messaging)
+    implementation(libs.firebase.analytics)
     //Accompanist
     implementation (libs.accompanist.systemuicontroller)
+    //retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.moshi)
 }

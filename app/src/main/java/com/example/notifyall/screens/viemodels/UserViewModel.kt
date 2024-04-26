@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notifyall.repository.UserRepository
 import com.example.notifyall.screens.healper.FieldsState
+import com.example.notifyall.screens.pages.home_screen.HomeState
 import com.example.notifyall.screens.pages.register_screen.RegisterState
 import com.example.notifyall.util.Resource
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +26,7 @@ class UserViewModel @Inject constructor(
     private val _navigateToLogin = MutableLiveData(false)
     val navigateToLogin: LiveData<Boolean> = _navigateToLogin
 
-    private val _userTypeState = Channel<RegisterState>()
+    private val _userTypeState = Channel<HomeState>()
     val userTypeState = _userTypeState.receiveAsFlow()
 
     var userTypeValue = MutableLiveData(false)
@@ -50,15 +51,15 @@ class UserViewModel @Inject constructor(
                 is Resource.Success -> {
                     val userType = result.data // Assuming result.data contains the user type
                     userTypeValue.value = userType
-                    _userTypeState.send(RegisterState(isSuccess = ""))
+                    _userTypeState.send(HomeState(isSuccess = ""))
                 }
 
                 is Resource.Loading -> {
-                    _userTypeState.send(RegisterState(isLoading = true))
+                    _userTypeState.send(HomeState(isLoading = true))
                 }
 
                 is Resource.Error -> {
-                    _userTypeState.send(RegisterState(isError = result.message))
+                    _userTypeState.send(HomeState(isError = result.message))
                 }
             }
         }

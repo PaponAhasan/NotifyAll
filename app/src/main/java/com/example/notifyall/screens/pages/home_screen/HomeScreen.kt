@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.NotificationAdd
-import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -42,8 +41,9 @@ import androidx.navigation.NavController
 import com.example.koijabencarowner.screens.healper.AutoResizedText
 import com.example.koijabencarowner.screens.healper.ButtonComponentField
 import com.example.koijabencarowner.screens.healper.OutlinedTextField
+import com.example.koijabencarowner.screens.healper.ProgressLoader
 import com.example.notifyall.R
-import com.example.notifyall.models.Notification
+import com.example.notifyall.fcm.NotificationBody
 import com.example.notifyall.navigation.NavRoute
 import com.example.notifyall.screens.viemodels.NotificationViewModel
 import com.example.notifyall.screens.viemodels.UserViewModel
@@ -69,6 +69,7 @@ fun HomeScreen(
     val context = LocalContext.current
 
     val state = userViewModel.userTypeState.collectAsState(initial = null)
+    val notificationState = notificationViewModel.notificationState.collectAsState(initial = null)
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(
@@ -96,8 +97,6 @@ fun HomeScreen(
             }
 
             if (userViewModel.userTypeValue.value == true) {
-                // Admin User
-
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_64)))
 
                 AutoResizedText(
@@ -135,17 +134,23 @@ fun HomeScreen(
                     }
                     scope.launch {
                         notificationViewModel.sendNotification(
-                            Notification(
-                                title = notification,
-                                body = notification
+                            NotificationBody(
+                                title = "Notification",
+                                message = notification
                             )
                         )
                     }
                 }
-
+                // Admin User
+                LaunchedEffect(key1 = notificationViewModel) {
+                    notificationViewModel.unsubscribeToTopic()
+                }
             } else {
                 // Normal User
-                Text(text = "User Screen")
+                NormalUserView()
+                LaunchedEffect(key1 = notificationViewModel) {
+                    notificationViewModel.subscribeToTopic()
+                }
             }
         }
     }
@@ -192,6 +197,15 @@ fun HomeScreen(
         }
     }
 
+    LaunchedEffect(key1 = notificationState.value?.isSuccess) {
+        scope.launch {
+            if (notificationState.value?.isSuccess?.isNotEmpty() == true) {
+                val success = state.value?.isSuccess
+                Toast.makeText(context, "$success", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     LaunchedEffect(key1 = state.value?.isError) {
         scope.launch {
             if (state.value?.isError?.isNotBlank() == true) {
@@ -201,5 +215,16 @@ fun HomeScreen(
         }
     }
 
-    //if (state.value?.isLoading == true) ProgressLoader()
+    LaunchedEffect(key1 = notificationState.value?.isError) {
+        scope.launch {
+            if (notificationState.value?.isError?.isNotBlank() == true) {
+                val error = notificationState.value?.isError
+                Toast.makeText(context, "$error message", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    if (notificationState.value?.isLoading == true) ProgressLoader()
+
+    if (state.value?.isLoading == true) ProgressLoader()
 }

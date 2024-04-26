@@ -27,5 +27,6 @@
 
     <string name="notification1">Enter your notification</string>
     <string name="notification2">Send Notification</string>
+    <string name="notification3">default_notification_channel_id</string>
 
 </resources>

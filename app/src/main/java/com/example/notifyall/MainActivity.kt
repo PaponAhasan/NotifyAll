@@ -1,6 +1,9 @@
 package com.example.notifyall
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.Manifest
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -10,6 +13,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.notifyall.navigation.Navigation
 import com.example.notifyall.ui.theme.NotifyAllTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -19,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestNotificationPermission()
         setContent {
             NotifyAllTheme {
                 val systemUiController = rememberSystemUiController()
@@ -44,6 +50,23 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Navigation()
                 }
+            }
+        }
+    }
+
+    private fun requestNotificationPermission() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val hasPermission = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+
+            if(!hasPermission) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    0
+                )
             }
         }
     }

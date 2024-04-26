@@ -1,5 +1,8 @@
 [versions]
 agp = "8.3.2"
+converterMoshi = "2.9.0"
+firebaseAnalytics = "21.6.2"
+firebaseMessaging = "23.4.1"
 kotlin = "1.9.22"
 coreKtx = "1.13.0"
 junit = "4.13.2"
@@ -21,9 +24,13 @@ googleServices = "4.4.1"
 firebaseAuth = "22.3.1"
 firebaseFirestore = "24.11.1"
 accompanistSystemuicontroller = "0.27.0"
+retrofit = "2.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "converterMoshi" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalytics" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessaging" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -56,6 +63,7 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -63,5 +71,6 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 daggerDaggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 
 
