@@ -14,15 +14,15 @@ Registration Page       |   Admin page            | User Page         |
 - Create a mobile app with at least two screens: one for displaying a list of tasks and another for
 adding/editing tasks.  
 - Use the MVVM (Model-View-ViewModel) architecture for organizing your code.  
-- Implement a local database to store tasks using the Room Persistence Library.  
+- Implement a cloud database to store user information(Authentication & Firestore database)
+- Implement a retrofit for FCM(Firebase Cloud Messaging) API call.
+- For building UI using Jetpack Compose with Navigation
+- For asynchronous used Coroutines
+- Used Dependency injection with Hilt
 - The app have the following features:  
-  - Display a list of tasks with their names, due dates, and completion status.  
-  - Ability to add a new task with a name, description, and due date.  
-  - Ability to edit an existing task.  
-  - Ability to mark a task as completed and remove it from the list.  
-  - Set an alarm reminder when adding or updating a task. The alarm should trigger at the task's
-    due date.  
-  - Cancel the alarm when deleting a task.  
+  - Login - email and password  
+  - Register - email, name, password, and confirm password.  
+  - Admin will input the notification message and trigger the notification, and all users will be able to see the push notification.
   
 ## Description
 The goal of this assignment is for The admin will input the notification message and trigger the notification, and all users will be able to see the push notification.
